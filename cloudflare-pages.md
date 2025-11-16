@@ -7,6 +7,7 @@
 - **Build command**: `npm run build`
 - **Build output directory**: `dist`
 - **Root directory**: `/` (or leave empty)
+- **Deploy command**: **LEAVE EMPTY** ⚠️ (Cloudflare Pages auto-deploys from build output directory)
 
 ## Framework Settings
 
