@@ -79,7 +79,7 @@ const CustomGreetingForm = ({ onGenerate }: CustomGreetingFormProps) => {
         </div>
         {error ? <div className="form-error">{error}</div> : null}
         <button type="submit" className="primary-button">
-          Создать поздравление
+          ✨ Создать поздравление 🎁
         </button>
       </form>
     </section>
