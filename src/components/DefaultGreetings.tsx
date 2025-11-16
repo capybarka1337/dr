@@ -83,15 +83,13 @@ const PRESET_GREETINGS: GreetingCard[] = [
 ];
 
 interface DefaultGreetingsProps {
-  onGreetingSelect?: (text: string, theme: ThemeKey) => void;
+  onGenerate: (payload: { text: string; theme: ThemeKey }) => void;
 }
 
-const DefaultGreetings = ({ onGreetingSelect }: DefaultGreetingsProps) => {
+const DefaultGreetings = ({ onGenerate }: DefaultGreetingsProps) => {
   const handleCardClick = (greeting: GreetingCard) => {
     const fullText = `${greeting.title}\n\n${greeting.body.join('\n')}`;
-    if (onGreetingSelect) {
-      onGreetingSelect(fullText, greeting.theme);
-    }
+    onGenerate({ text: fullText, theme: greeting.theme });
   };
 
   return (
