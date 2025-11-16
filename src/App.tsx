@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import CustomGreetingForm from './components/CustomGreetingForm';
 import DefaultGreetings from './components/DefaultGreetings';
 import GreetingView from './components/GreetingView';
@@ -10,9 +10,6 @@ type GeneratedData = {
 };
 
 const App = () => {
-  const [generatedLink, setGeneratedLink] = useState<string | null>(null);
-  const [generatedData, setGeneratedData] = useState<GeneratedData | null>(null);
-
   const searchParams = useMemo(() => {
     if (typeof window === 'undefined') {
       return new URLSearchParams('');
@@ -41,18 +38,18 @@ const App = () => {
     }
 
     const fullLink = url.toString();
-    setGeneratedLink(fullLink);
-    setGeneratedData({ text, theme });
-    window.history.replaceState(null, '', fullLink);
+    
+    // Сразу переходим на открытку
+    window.location.href = fullLink;
   };
 
   return (
     <div className="landing">
       <header className="hero">
-        <div className="hero__badge">✨ Минималистичные поздравления</div>
-        <h1 className="hero__title">Тёплые слова для особенного дня</h1>
+        <div className="hero__badge">✨ Красивые поздравления</div>
+        <h1 className="hero__title">Создайте открытку для особенных людей</h1>
         <p className="hero__subtitle">
-          Создайте стильную открытку за минуту и поделитесь ссылкой — никакого сложного оформления, только красота и забота.
+          Выберите из 20+ готовых поздравлений или напишите свои слова. Мгновенно создайте стильную открытку с уникальной ссылкой для отправки.
         </p>
         <div className="hero__features">
           <div className="feature">
@@ -61,7 +58,7 @@ const App = () => {
           </div>
           <div className="feature">
             <span className="feature__icon">💝</span>
-            <span className="feature__text">Готовые поздравления</span>
+            <span className="feature__text">20+ готовых поздравлений</span>
           </div>
           <div className="feature">
             <span className="feature__icon">🔗</span>
@@ -71,7 +68,7 @@ const App = () => {
       </header>
       <main className="content">
         <DefaultGreetings onGenerate={handleGenerate} />
-        <CustomGreetingForm onGenerate={handleGenerate} generatedLink={generatedLink} generatedData={generatedData} />
+        <CustomGreetingForm onGenerate={handleGenerate} />
       </main>
       <footer className="footer">
         <span>С любовью и вдохновением · {new Date().getFullYear()}</span>
