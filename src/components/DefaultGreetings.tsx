@@ -3,11 +3,29 @@ import { THEMES, ThemeKey } from '../themes';
 interface GreetingCard {
   id: string;
   title: string;
+  subtitle?: string;
   body: string[];
   theme: ThemeKey;
+  badge?: string;
+  accentEmoji?: string;
+  isFeatured?: boolean;
 }
 
 const PRESET_GREETINGS: GreetingCard[] = [
+  {
+    id: 'mom_admin',
+    title: 'Мама, вы — наше вдохновение',
+    subtitle: 'Особенное поздравление от команды открыток',
+    body: [
+      'Дорогая мама, вы учите нас замечать красоту в простых жестах и делиться ею с миром.',
+      'Администратор и вся команда нашего сервиса поздравлений поздравляют вас с днём рождения и желают, чтобы забота, которой вы окружаете близких, возвращалась к вам светом и нежностью.',
+      'Пусть каждый новый день приносит вдохновение, лёгкость и улыбки тех, кого вы любите.',
+    ],
+    theme: 'cherry',
+    badge: '💌 От команды проекта',
+    accentEmoji: '👑',
+    isFeatured: true,
+  },
   {
     id: 'dad',
     title: 'С днем рождения, папа!',
@@ -16,6 +34,7 @@ const PRESET_GREETINGS: GreetingCard[] = [
       'Пускай новый год жизни будет наполнен вдохновением, радостью и победами.',
     ],
     theme: 'lagoon',
+    accentEmoji: '🛠️',
   },
   {
     id: 'mom',
@@ -25,6 +44,8 @@ const PRESET_GREETINGS: GreetingCard[] = [
       'Пусть сбудутся самые тёплые мечты, а каждый день дарит улыбку.',
     ],
     theme: 'sunrise',
+    accentEmoji: '🌷',
+    badge: 'Самая родная',
   },
   {
     id: 'friend',
@@ -34,6 +55,7 @@ const PRESET_GREETINGS: GreetingCard[] = [
       'Пусть каждый день будет наполнен смехом, приключениями и яркими моментами!',
     ],
     theme: 'ocean',
+    accentEmoji: '🎉',
   },
   {
     id: 'sister',
@@ -43,6 +65,7 @@ const PRESET_GREETINGS: GreetingCard[] = [
       'Пусть твоя жизнь будет такой же яркой и прекрасной, как ты сама!',
     ],
     theme: 'lavender',
+    accentEmoji: '💖',
   },
   {
     id: 'brother',
@@ -52,6 +75,7 @@ const PRESET_GREETINGS: GreetingCard[] = [
       'Желаю тебе покорять новые вершины и всегда оставаться таким же крутым!',
     ],
     theme: 'forest',
+    accentEmoji: '🚀',
   },
   {
     id: 'colleague',
@@ -61,6 +85,7 @@ const PRESET_GREETINGS: GreetingCard[] = [
       'Желаю успехов в карьере, интересных проектов и гармонии во всем!',
     ],
     theme: 'sunset',
+    accentEmoji: '💼',
   },
   {
     id: 'love',
@@ -70,6 +95,7 @@ const PRESET_GREETINGS: GreetingCard[] = [
       'Пусть все твои мечты сбудутся, а я всегда буду рядом, чтобы поддержать тебя.',
     ],
     theme: 'cherry',
+    accentEmoji: '💘',
   },
   {
     id: 'grandma',
@@ -79,6 +105,7 @@ const PRESET_GREETINGS: GreetingCard[] = [
       'Пусть каждый день приносит тебе радость, здоровье и тепло близких!',
     ],
     theme: 'aurora',
+    accentEmoji: '🫶',
   },
 ];
 
@@ -104,10 +131,12 @@ const DefaultGreetings = ({ onGenerate }: DefaultGreetingsProps) => {
       <div className="default-greetings__cards">
         {PRESET_GREETINGS.map((greeting) => {
           const theme = THEMES[greeting.theme];
+          const accentEmoji = greeting.accentEmoji ?? theme.icon;
+
           return (
             <article
               key={greeting.id}
-              className="greeting-card greeting-card--clickable"
+              className={`greeting-card greeting-card--clickable ${greeting.isFeatured ? 'greeting-card--featured' : ''}`}
               style={{
                 backgroundImage: theme.gradient,
                 color: theme.textColor,
@@ -123,18 +152,36 @@ const DefaultGreetings = ({ onGenerate }: DefaultGreetingsProps) => {
                 }
               }}
             >
+              <div className="greeting-card__glow" aria-hidden="true"></div>
+              <div className="greeting-card__particles" aria-hidden="true">
+                <span className="greeting-card__particle greeting-card__particle--1">✦</span>
+                <span className="greeting-card__particle greeting-card__particle--2">✶</span>
+                <span className="greeting-card__particle greeting-card__particle--3">✺</span>
+              </div>
               <div
                 className="greeting-card__overlay"
                 style={{ backgroundColor: theme.cardBackground }}
               >
-                <h3 className="greeting-card__title">{greeting.title}</h3>
+                <div className="greeting-card__header">
+                  <div className="greeting-card__icon" aria-hidden="true">
+                    <span>{accentEmoji}</span>
+                  </div>
+                  <div className="greeting-card__heading">
+                    {greeting.badge ? <span className="greeting-card__badge">{greeting.badge}</span> : null}
+                    <h3 className="greeting-card__title">{greeting.title}</h3>
+                    {greeting.subtitle ? <p className="greeting-card__subtitle">{greeting.subtitle}</p> : null}
+                  </div>
+                </div>
                 <div className="greeting-card__text">
                   {greeting.body.map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                   ))}
                 </div>
                 <div className="greeting-card__action">
-                  <span className="greeting-card__hint">Нажмите, чтобы создать открытку →</span>
+                  <span className="greeting-card__hint">
+                    <span className="greeting-card__hint-icon">→</span>
+                    Создать открытку
+                  </span>
                 </div>
               </div>
             </article>
