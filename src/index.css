@@ -67,6 +67,40 @@ video {
   color: rgba(30, 19, 57, 0.72);
 }
 
+.hero__features {
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 32px);
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 12px rgba(46, 33, 78, 0.08);
+  font-size: 0.95rem;
+  color: #1e1339;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 33, 78, 0.12);
+}
+
+.feature__icon {
+  font-size: 1.1rem;
+}
+
+.feature__text {
+  font-weight: 500;
+}
+
 .content {
   width: min(1040px, 100%);
   padding: 24px clamp(20px, 8vw, 56px) 96px;
@@ -112,7 +146,7 @@ video {
 .default-greetings__cards {
   display: grid;
   gap: 28px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .greeting-card {
@@ -125,6 +159,19 @@ video {
 
 .greeting-card:hover {
   transform: translateY(-6px);
+}
+
+.greeting-card--clickable {
+  cursor: pointer;
+}
+
+.greeting-card--clickable:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.greeting-card--clickable:focus {
+  outline: 3px solid rgba(105, 67, 212, 0.4);
+  outline-offset: 2px;
 }
 
 .greeting-card__overlay {
@@ -147,6 +194,22 @@ video {
   gap: 10px;
   font-size: 1.03rem;
   line-height: 1.6;
+}
+
+.greeting-card__action {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.greeting-card__hint {
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.greeting-card--clickable:hover .greeting-card__hint {
+  opacity: 1;
 }
 
 .custom-section {
@@ -199,7 +262,7 @@ video {
 .theme-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
 .theme-option {
@@ -446,6 +509,16 @@ video {
     padding: 56px 20px 16px;
   }
 
+  .hero__features {
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .feature {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
   .content {
     gap: 56px;
     padding-bottom: 72px;
@@ -456,7 +529,7 @@ video {
   }
 
   .theme-grid {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
 
   .generated-actions {
@@ -471,6 +544,11 @@ video {
   .share-button {
     width: 100%;
     justify-content: center;
+  }
+
+  .default-greetings__cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .shared-view__card {

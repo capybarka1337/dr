@@ -49,14 +49,28 @@ const App = () => {
   return (
     <div className="landing">
       <header className="hero">
-        <div className="hero__badge">Минималистичные поздравления</div>
+        <div className="hero__badge">✨ Минималистичные поздравления</div>
         <h1 className="hero__title">Тёплые слова для особенного дня</h1>
         <p className="hero__subtitle">
           Создайте стильную открытку за минуту и поделитесь ссылкой — никакого сложного оформления, только красота и забота.
         </p>
+        <div className="hero__features">
+          <div className="feature">
+            <span className="feature__icon">🎨</span>
+            <span className="feature__text">8 уникальных тем</span>
+          </div>
+          <div className="feature">
+            <span className="feature__icon">💝</span>
+            <span className="feature__text">Готовые поздравления</span>
+          </div>
+          <div className="feature">
+            <span className="feature__icon">🔗</span>
+            <span className="feature__text">Мгновенные ссылки</span>
+          </div>
+        </div>
       </header>
       <main className="content">
-        <DefaultGreetings />
+        <DefaultGreetings onGenerate={handleGenerate} />
         <CustomGreetingForm onGenerate={handleGenerate} generatedLink={generatedLink} generatedData={generatedData} />
       </main>
       <footer className="footer">
