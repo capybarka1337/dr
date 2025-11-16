@@ -1,14 +1,11 @@
 import { FormEvent, useState } from 'react';
-import ShareButton from './ShareButton';
 import { DEFAULT_THEME, THEMES, THEME_KEYS, ThemeKey } from '../themes';
 
 interface CustomGreetingFormProps {
   onGenerate: (payload: { text: string; theme: ThemeKey }) => void;
-  generatedLink: string | null;
-  generatedData: { text: string; theme: ThemeKey } | null;
 }
 
-const CustomGreetingForm = ({ onGenerate, generatedLink, generatedData }: CustomGreetingFormProps) => {
+const CustomGreetingForm = ({ onGenerate }: CustomGreetingFormProps) => {
   const [text, setText] = useState('');
   const [theme, setTheme] = useState<ThemeKey>(DEFAULT_THEME);
   const [error, setError] = useState<string | null>(null);
@@ -30,9 +27,9 @@ const CustomGreetingForm = ({ onGenerate, generatedLink, generatedData }: Custom
     <section className="custom-section">
       <div className="section-heading">
         <span className="section-badge">Создайте свою открытку</span>
-        <h2 className="section-title">Персональное поздравление</h2>
+        <h2 className="section-title">Уникальное поздравление</h2>
         <p className="section-subtitle">
-          Напишите несколько тёплых слов и выберите настроение открытки — мы сразу подготовим ссылку для отправки.
+          Напишите от души тёплые слова и выберите идеальное оформление из 8 уникальных тем. Мы мгновенно создадим ссылку для отправки вашим близким.
         </p>
       </div>
       <form className="custom-form" onSubmit={handleSubmit}>
@@ -85,42 +82,6 @@ const CustomGreetingForm = ({ onGenerate, generatedLink, generatedData }: Custom
           Создать поздравление
         </button>
       </form>
-
-      {generatedLink && generatedData ? (
-        <div className="generated-result">
-          <h3 className="generated-title">Ваша открытка готова</h3>
-          <p className="generated-subtitle">Сохраните ссылку или поделитесь ею сразу.</p>
-          <div
-            className="generated-preview"
-            style={{ backgroundImage: THEMES[generatedData.theme].gradient }}
-          >
-            <div
-              className="generated-preview__card"
-              style={{
-                backgroundColor: THEMES[generatedData.theme].cardBackground,
-                color: THEMES[generatedData.theme].textColor,
-                boxShadow: THEMES[generatedData.theme].shadow,
-              }}
-            >
-              <div className="generated-preview__content">
-                {generatedData.text
-                  .split(/\r?\n/)
-                  .map((line) => line.trim())
-                  .filter(Boolean)
-                  .map((line, index) => (
-                    <p key={`${line}-${index}`}>{line}</p>
-                  ))}
-              </div>
-            </div>
-          </div>
-          <div className="generated-actions">
-            <div className="link-chip" title={generatedLink}>
-              {generatedLink}
-            </div>
-            <ShareButton link={generatedLink} label="Скопировать или отправить" />
-          </div>
-        </div>
-      ) : null}
     </section>
   );
 };
