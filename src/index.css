@@ -154,10 +154,109 @@ video {
   padding: 4px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.3s ease;
+  background-size: 180% 180%;
+  animation: cardGradientWave 18s ease infinite;
+  isolation: isolate;
 }
 
-.greeting-card:hover {
+@keyframes cardGradientWave {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.greeting-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 45%, rgba(255, 255, 255, 0.15));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.greeting-card::after {
+  content: '';
+  position: absolute;
+  inset: 12% 18%;
+  border-radius: 28px;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.35), transparent 60%);
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.greeting-card:hover::before,
+.greeting-card:focus-visible::before {
+  opacity: 0.6;
+}
+
+.greeting-card:hover::after,
+.greeting-card:focus-visible::after {
+  opacity: 0.55;
+  transform: scale(1.1);
+}
+
+.greeting-card__glow {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4), transparent 55%), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.35), transparent 60%);
+  filter: blur(24px);
+  opacity: 0.55;
+  animation: cardGlowPulse 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes cardGlowPulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.95); }
+  50% { opacity: 0.65; transform: scale(1.05); }
+}
+
+.greeting-card__particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.greeting-card__particle {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0.45;
+  animation: cardParticleFloat 6s ease-in-out infinite;
+  color: currentColor;
+}
+
+.greeting-card__particle--1 {
+  top: 18%;
+  left: 16%;
+}
+
+.greeting-card__particle--2 {
+  top: 32%;
+  right: 18%;
+  animation-delay: 1.2s;
+}
+
+.greeting-card__particle--3 {
+  bottom: 18%;
+  left: 30%;
+  animation-delay: 2.1s;
+}
+
+@keyframes cardParticleFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.85); opacity: 0.45; }
+  50% { transform: translate3d(6px, -10px, 0) scale(1.1); opacity: 0.9; }
+}
+
+.greeting-card:hover,
+.greeting-card:focus-within {
   transform: translateY(-6px);
 }
 
@@ -167,49 +266,163 @@ video {
 
 .greeting-card--clickable:hover {
   transform: translateY(-8px) scale(1.02);
+  filter: brightness(1.03);
 }
 
 .greeting-card--clickable:focus {
-  outline: 3px solid rgba(105, 67, 212, 0.4);
+  outline: 3px solid rgba(105, 67, 212, 0.35);
   outline-offset: 2px;
 }
 
+.greeting-card--clickable:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .greeting-card__overlay {
+  position: relative;
+  z-index: 3;
   border-radius: 28px;
-  padding: clamp(24px, 5vw, 40px);
+  padding: clamp(26px, 5vw, 42px);
   backdrop-filter: blur(12px);
-  min-height: 240px;
+  min-height: 260px;
   display: grid;
-  gap: 16px;
+  grid-template-rows: auto 1fr auto;
+  gap: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background-clip: padding-box;
+}
+
+.greeting-card__header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.greeting-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 1.9rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.greeting-card__heading {
+  display: grid;
+  gap: 8px;
+}
+
+.greeting-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.16);
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.28);
 }
 
 .greeting-card__title {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.65rem;
   font-weight: 700;
+  line-height: 1.25;
+}
+
+.greeting-card__subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: inherit;
+  opacity: 0.85;
 }
 
 .greeting-card__text {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 10px;
-  font-size: 1.03rem;
-  line-height: 1.6;
+  gap: 12px;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.greeting-card__text p {
+  margin: 0;
 }
 
 .greeting-card__action {
-  margin-top: 12px;
-  text-align: center;
+  margin-top: 4px;
+  text-align: left;
 }
 
 .greeting-card__hint {
-  font-size: 0.85rem;
-  font-weight: 500;
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.3s ease;
 }
 
-.greeting-card--clickable:hover .greeting-card__hint {
+.greeting-card__hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 0.85rem;
+  transition: transform 0.3s ease;
+}
+
+.greeting-card--clickable:hover .greeting-card__hint,
+.greeting-card--clickable:focus-visible .greeting-card__hint {
   opacity: 1;
+  transform: translateX(2px);
+}
+
+.greeting-card--clickable:hover .greeting-card__hint-icon,
+.greeting-card--clickable:focus-visible .greeting-card__hint-icon {
+  transform: translateX(4px) scale(1.1);
+}
+
+.greeting-card--featured .greeting-card__overlay {
+  border-width: 2px;
+  padding: clamp(30px, 5vw, 48px);
+}
+
+.greeting-card--featured .greeting-card__badge {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+@media (min-width: 960px) {
+  .greeting-card--featured {
+    grid-column: span 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .greeting-card {
+    animation: none;
+  }
+
+  .greeting-card__glow,
+  .greeting-card__particle {
+    animation: none;
+  }
 }
 
 .custom-section {
@@ -962,6 +1175,37 @@ video {
     font-size: 0.8rem;
     padding: 6px 12px;
   }
+
+  .greeting-card__overlay {
+    padding: 22px 18px 26px;
+  }
+
+  .greeting-card__icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.4rem;
+  }
+
+  .greeting-card__title {
+    font-size: 1.35rem;
+  }
+
+  .greeting-card__subtitle {
+    font-size: 0.9rem;
+  }
+
+  .greeting-card__text {
+    font-size: 0.95rem;
+  }
+
+  .greeting-card__badge {
+    font-size: 0.72rem;
+    padding: 5px 12px;
+  }
+
+  .greeting-card__hint {
+    font-size: 0.78rem;
+  }
 }
 
 .footer {
@@ -1017,6 +1261,37 @@ video {
   .default-greetings__cards {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  .greeting-card__overlay {
+    padding: 24px 22px 28px;
+    min-height: 0;
+  }
+
+  .greeting-card__header {
+    align-items: flex-start;
+  }
+
+  .greeting-card__icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.6rem;
+  }
+
+  .greeting-card__title {
+    font-size: 1.5rem;
+  }
+
+  .greeting-card__subtitle {
+    font-size: 0.95rem;
+  }
+
+  .greeting-card__text {
+    font-size: 0.98rem;
+  }
+
+  .greeting-card__hint {
+    font-size: 0.82rem;
   }
 
   .shared-view__card {
