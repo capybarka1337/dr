@@ -1426,6 +1426,23 @@ video {
 .mom-greeting {
   position: relative;
   overflow: hidden;
+  animation: none;
+  background-size: 260% 260%;
+}
+
+.mom-greeting--animated {
+  animation: gradientShift 60s ease infinite;
+}
+
+.mom-greeting--static {
+  animation: none;
+}
+
+.mom-greeting .shared-view__card {
+  animation: none;
+  transform-style: flat;
+  backdrop-filter: blur(8px);
+  will-change: auto;
 }
 
 .mom-greeting__hearts {
@@ -1535,6 +1552,11 @@ video {
   text-align: center;
   font-size: 1.5rem;
   opacity: 0.7;
+}
+
+.mom-greeting--static .shared-view__sparkle {
+  animation: none;
+  opacity: 0.55;
 }
 
 @media (max-width: 768px) {

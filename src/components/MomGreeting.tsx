@@ -1,12 +1,52 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const MomGreeting = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [animationsActive, setAnimationsActive] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    handleChange();
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange);
+    } else {
+      mediaQuery.addListener(handleChange);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleChange);
+      } else {
+        mediaQuery.removeListener(handleChange);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setAnimationsActive(false);
+      return;
+    }
+
+    setAnimationsActive(true);
+
+    const timer = setTimeout(() => setAnimationsActive(false), 16000);
+
+    return () => clearTimeout(timer);
+  }, [prefersReducedMotion]);
 
   const greetingText = [
     "Любимая мамочка! ❤️",
@@ -29,48 +69,95 @@ const MomGreeting = () => {
   const cardBackground = 'rgba(255, 250, 252, 0.95)';
   const textColor = '#6b3d58';
 
+  const confettiPieces = useMemo(() => {
+    if (!animationsActive || prefersReducedMotion) {
+      return [];
+    }
+
+    const colors = ['#ff9a9e', '#f5576c', '#fecfef', '#ffd6e8'];
+    const totalPieces = 16;
+
+    return Array.from({ length: totalPieces }, (_, index) => ({
+      id: index,
+      left: Math.random() * 100,
+      delay: Math.random() * 2.5,
+      duration: 5 + Math.random() * 4,
+      color: colors[index % colors.length],
+    }));
+  }, [animationsActive, prefersReducedMotion]);
+
+  const floatingHearts = useMemo(() => {
+    if (!animationsActive || prefersReducedMotion) {
+      return [];
+    }
+
+    const totalHearts = 8;
+
+    return Array.from({ length: totalHearts }, (_, index) => ({
+      id: index,
+      left: Math.random() * 100,
+      delay: Math.random() * 4,
+      duration: 5 + Math.random() * 4,
+    }));
+  }, [animationsActive, prefersReducedMotion]);
+
+  const containerClassName = [
+    'shared-view',
+    'mom-greeting',
+    animationsActive ? 'mom-greeting--animated' : 'mom-greeting--static',
+  ].join(' ');
+
+  const shouldShowDecorations = isLoaded && animationsActive && !prefersReducedMotion;
+
   return (
-    <div className="shared-view mom-greeting" style={{ backgroundImage: gradient }}>
-      {isLoaded && (
+    <div className={containerClassName} style={{ backgroundImage: gradient }}>
+      {shouldShowDecorations && (
         <>
-          <div className="shared-view__confetti">
-            {[...Array(30)].map((_, i) => (
-              <div 
-                key={i} 
-                className="shared-view__confetti-piece"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${3 + Math.random() * 2}s`,
-                  backgroundColor: i % 3 === 0 ? '#ff9a9e' : i % 3 === 1 ? '#f5576c' : '#fecfef'
-                }}
-              />
-            ))}
-          </div>
-          
-          <div className="mom-greeting__hearts">
-            {[...Array(15)].map((_, i) => (
-              <div 
-                key={i} 
-                className="mom-greeting__heart"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  animationDuration: `${4 + Math.random() * 3}s`
-                }}
-              >
-                ❤️
-              </div>
-            ))}
-          </div>
+          {confettiPieces.length > 0 && (
+            <div className="shared-view__confetti">
+              {confettiPieces.map((piece) => (
+                <div
+                  key={piece.id}
+                  className="shared-view__confetti-piece"
+                  style={{
+                    left: `${piece.left}%`,
+                    animationDelay: `${piece.delay}s`,
+                    animationDuration: `${piece.duration}s`,
+                    backgroundColor: piece.color,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          {floatingHearts.length > 0 && (
+            <div className="mom-greeting__hearts">
+              {floatingHearts.map((heart) => (
+                <div
+                  key={heart.id}
+                  className="mom-greeting__heart"
+                  style={{
+                    left: `${heart.left}%`,
+                    animationDelay: `${heart.delay}s`,
+                    animationDuration: `${heart.duration}s`,
+                  }}
+                >
+                  ❤️
+                </div>
+              ))}
+            </div>
+          )}
         </>
       )}
-      
-      <div className={`shared-view__card mom-greeting__card ${isLoaded ? 'loaded' : ''}`} style={{
-        backgroundColor: cardBackground,
-        color: textColor,
-        boxShadow: '0 40px 100px rgba(245, 87, 108, 0.4), 0 0 150px rgba(240, 147, 251, 0.3)',
-      }}>
+
+      <div
+        className={`shared-view__card mom-greeting__card ${isLoaded ? 'loaded' : ''}`}
+        style={{
+          backgroundColor: cardBackground,
+          color: textColor,
+          boxShadow: '0 40px 100px rgba(245, 87, 108, 0.4), 0 0 150px rgba(240, 147, 251, 0.3)',
+        }}
+      >
         <div className="shared-view__decorations">
           <div className="shared-view__sparkle shared-view__sparkle--1">✨</div>
           <div className="shared-view__sparkle shared-view__sparkle--2">💖</div>
@@ -84,13 +171,17 @@ const MomGreeting = () => {
         </div>
 
         <div className="shared-view__content mom-greeting__content">
-          {greetingText.map((line, index) => 
+          {greetingText.map((line, index) =>
             line === "" ? (
               <div key={index} style={{ height: '0.5em' }} />
             ) : (
-              <p key={index} className="shared-view__line" style={{
-                animationDelay: `${index * 0.1}s`
-              }}>
+              <p
+                key={index}
+                className="shared-view__line"
+                style={{
+                  animationDelay: `${index * 0.1}s`,
+                }}
+              >
                 {line}
               </p>
             )
