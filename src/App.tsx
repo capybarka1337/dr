@@ -18,8 +18,8 @@ const App = () => {
     return new URLSearchParams(window.location.search);
   }, []);
   
-  const specialPage = searchParams.get('sp');
-  if (specialPage === 'mom2024') {
+  const specialPage = searchParams.get('dr');
+  if (specialPage === 'best') {
     return <MomGreeting />;
   }
   
