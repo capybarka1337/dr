@@ -43,7 +43,7 @@ const MomGreeting = () => {
 
     setAnimationsActive(true);
 
-    const timer = setTimeout(() => setAnimationsActive(false), 16000);
+    const timer = setTimeout(() => setAnimationsActive(false), 8000);
 
     return () => clearTimeout(timer);
   }, [prefersReducedMotion]);
@@ -66,7 +66,7 @@ const MomGreeting = () => {
   ];
 
   const gradient = 'linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #ff9a9e 50%, #ffd6e8 75%, #fecfef 100%)';
-  const cardBackground = 'rgba(255, 250, 252, 0.95)';
+  const cardBackground = 'rgba(255, 250, 252, 0.98)';
   const textColor = '#6b3d58';
 
   const confettiPieces = useMemo(() => {
@@ -75,7 +75,7 @@ const MomGreeting = () => {
     }
 
     const colors = ['#ff9a9e', '#f5576c', '#fecfef', '#ffd6e8'];
-    const totalPieces = 16;
+    const totalPieces = 8;
 
     return Array.from({ length: totalPieces }, (_, index) => ({
       id: index,
@@ -91,7 +91,7 @@ const MomGreeting = () => {
       return [];
     }
 
-    const totalHearts = 8;
+    const totalHearts = 4;
 
     return Array.from({ length: totalHearts }, (_, index) => ({
       id: index,
