@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { THEMES, ThemeKey } from '../themes';
 
 interface GreetingCard {
@@ -226,6 +227,33 @@ interface DefaultGreetingsProps {
 }
 
 const DefaultGreetings = ({ onGenerate }: DefaultGreetingsProps) => {
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '50px',
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, options);
+
+    if (cardsContainerRef.current) {
+      const cards = cardsContainerRef.current.querySelectorAll('.greeting-card');
+      cards.forEach((card) => observer.observe(card));
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const handleCardClick = (greeting: GreetingCard) => {
     const fullText = `${greeting.title}\n\n${greeting.body.join('\n')}`;
     onGenerate({ text: fullText, theme: greeting.theme });
@@ -240,7 +268,7 @@ const DefaultGreetings = ({ onGenerate }: DefaultGreetingsProps) => {
           Выберите идеальное поздравление из 20+ готовых вариантов для всей семьи. Featured карточки отмечены особым стилем — кликните, чтобы создать красивую открытку с уникальной ссылкой за секунду.
         </p>
       </div>
-      <div className="default-greetings__cards">
+      <div className="default-greetings__cards" ref={cardsContainerRef}>
         {PRESET_GREETINGS.map((greeting) => {
           const theme = THEMES[greeting.theme];
           const accentEmoji = greeting.accentEmoji ?? theme.icon;
