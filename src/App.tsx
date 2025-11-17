@@ -1,8 +1,21 @@
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { useMemo } from 'react';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { CalendarProvider } from './contexts/CalendarContext';
+
+// Компоненты для поздравлений
 import CustomGreetingForm from './components/CustomGreetingForm';
 import DefaultGreetings from './components/DefaultGreetings';
 import GreetingView from './components/GreetingView';
 import MomGreeting from './components/MomGreeting';
+
+// Новые компоненты
+import AuthPage from './components/AuthPage';
+import Dashboard from './components/Dashboard';
+import ThemeToggle from './components/ThemeToggle';
+import Navigation from './components/Navigation';
+
 import { DEFAULT_THEME, THEMES, ThemeKey } from './themes';
 
 type GeneratedData = {
@@ -10,7 +23,40 @@ type GeneratedData = {
   theme: ThemeKey;
 };
 
-const App = () => {
+// Компонент-обертка для защиты маршрутов
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return (
+      <div className="loading">
+        <div className="loading__spinner"></div>
+        <p>Загрузка...</p>
+      </div>
+    );
+  }
+  
+  return user ? <>{children}</> : <Navigate to="/auth" replace />;
+};
+
+// Компонент для общедоступных маршрутов (перенаправляет в дашборд если авторизован)
+const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return (
+      <div className="loading">
+        <div className="loading__spinner"></div>
+        <p>Загрузка...</p>
+      </div>
+    );
+  }
+  
+  return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+};
+
+// Лендинг компонент
+const Landing: React.FC = () => {
   const searchParams = useMemo(() => {
     if (typeof window === 'undefined') {
       return new URLSearchParams('');
@@ -52,6 +98,7 @@ const App = () => {
 
   return (
     <div className="landing">
+      <Navigation />
       <header className="hero">
         <div className="hero__badge">✨ Красивые поздравления</div>
         <h1 className="hero__title">Создайте открытку для особенных людей</h1>
@@ -71,6 +118,16 @@ const App = () => {
             <span className="feature__icon">🔗</span>
             <span className="feature__text">Мгновенные ссылки</span>
           </div>
+          <div className="feature">
+            <span className="feature__icon">📅</span>
+            <span className="feature__text">Календарь дней рождения</span>
+          </div>
+        </div>
+        
+        <div className="hero__cta">
+          <Link to="/auth" className="hero__button hero__button--primary">
+            🎂 Открыть календарь дней рождения
+          </Link>
         </div>
       </header>
       <main className="content">
@@ -81,6 +138,48 @@ const App = () => {
         <span>С любовью и вдохновением · {new Date().getFullYear()}</span>
       </footer>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <ThemeProvider>
+        <AuthProvider>
+          <CalendarProvider>
+            <Routes>
+              {/* Публичные маршруты */}
+              <Route path="/" element={<Landing />} />
+              <Route 
+                path="/auth" 
+                element={
+                  <PublicRoute>
+                    <AuthPage />
+                  </PublicRoute>
+                } 
+              />
+              
+              {/* Защищенные маршруты */}
+              <Route 
+                path="/dashboard" 
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Маршруты для поздравлений (остаются публичными) */}
+              <Route path="/greeting" element={<GreetingView text="" themeKey={DEFAULT_THEME} />} />
+              <Route path="/special/mom" element={<MomGreeting />} />
+              
+              {/* Перенаправление для неизвестных маршрутов */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </CalendarProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </Router>
   );
 };
 

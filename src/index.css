@@ -36,7 +36,7 @@ video {
 .hero {
   width: min(960px, 100%);
   text-align: center;
-  padding: 80px 24px 32px;
+  padding: 40px 24px 32px;
 }
 
 .hero__badge {
@@ -73,6 +73,35 @@ video {
   gap: clamp(16px, 4vw, 32px);
   margin-top: 32px;
   flex-wrap: wrap;
+}
+
+.hero__cta {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.hero__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.hero__button--primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.hero__button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
 }
 
 .feature {
@@ -1608,5 +1637,824 @@ video {
   .mom-greeting__content .shared-view__line {
     animation: none;
     opacity: 1;
+  }
+}
+
+/* Темы */
+.light-theme {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #adb5bd;
+  --border-color: #dee2e6;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --accent-color: #6f42c1;
+  --accent-hover: #5a2d91;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+}
+
+.dark-theme {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #666666;
+  --border-color: #404040;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+  --accent-color: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+}
+
+/* Загрузка */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.loading__spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Страница авторизации */
+.auth-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.auth-page--light {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.auth-page--dark {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.auth-page__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1200px;
+  width: 100%;
+  align-items: center;
+  padding: 40px 20px;
+  margin: 0 auto;
+}
+
+.auth-page__card {
+  background: var(--bg-primary);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  max-width: 480px;
+}
+
+.auth-page__header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-page__logo {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.auth-page__brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+}
+
+.auth-page__subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 16px;
+}
+
+.auth-page__features {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.auth-page__feature {
+  text-align: center;
+}
+
+.auth-page__feature-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.auth-page__feature-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+}
+
+.auth-page__feature-description {
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Формы авторизации */
+.auth-form {
+  width: 100%;
+}
+
+.auth-form__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 24px 0;
+  text-align: center;
+}
+
+.auth-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth-form__label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.auth-form__input {
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.auth-form__input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.auth-form__error {
+  color: var(--danger-color);
+  font-size: 14px;
+  padding: 12px;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--danger-color);
+}
+
+.auth-form__button {
+  padding: 14px 24px;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.auth-form__button:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.auth-form__button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.auth-form__switch {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.auth-form__link {
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.auth-form__link:hover {
+  color: var(--accent-hover);
+}
+
+/* Дашборд */
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+}
+
+.dashboard__header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.dashboard__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.dashboard__header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.dashboard__logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dashboard__user-menu {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dashboard__user-info {
+  text-align: right;
+}
+
+.dashboard__user-name {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dashboard__user-email {
+  display: block;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.dashboard__theme-toggle {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.dashboard__theme-toggle:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.dashboard__logout-button {
+  background: var(--danger-color);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.dashboard__logout-button:hover {
+  background: #c82333;
+}
+
+.dashboard__main {
+  flex: 1;
+  padding: 32px 0;
+}
+
+.dashboard__content {
+  display: grid;
+  grid-template-columns: 320px 1fr 320px;
+  gap: 32px;
+}
+
+.dashboard__sidebar,
+.dashboard__calendar-section,
+.dashboard__birthday-section {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard__footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: 16px 0;
+}
+
+.dashboard__footer-text {
+  text-align: center;
+  color: var(--text-secondary);
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Календарь */
+.calendar {
+  width: 100%;
+}
+
+.calendar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.calendar__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.calendar__nav-button {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.calendar__nav-button:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: white;
+}
+
+.calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.calendar__weekday {
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 12px;
+  padding: 8px;
+}
+
+.calendar__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar__day {
+  aspect-ratio: 1;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.calendar__day:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.calendar__day--selected {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: white;
+}
+
+.calendar__day--today {
+  border-color: var(--success-color);
+  border-width: 3px;
+}
+
+.calendar__day--has-birthday {
+  background: linear-gradient(135deg, var(--bg-primary), rgba(255, 107, 107, 0.1));
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+.calendar__day-number {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.calendar__birthday-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: var(--danger-color);
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.calendar__birthday-count {
+  transform: scale(0.8);
+}
+
+/* Список дней рождения */
+.birthday-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.birthday-list__section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.birthday-list__section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.birthday-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.birthday-list__item {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.birthday-list__item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.birthday-list__item-content {
+  flex: 1;
+}
+
+.birthday-list__item-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.birthday-list__item-date {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0 0 4px 0;
+}
+
+.birthday-list__item-notes {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  font-style: italic;
+}
+
+.birthday-list__item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.birthday-list__edit-button,
+.birthday-list__delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.birthday-list__edit-button:hover {
+  background: var(--warning-color);
+}
+
+.birthday-list__delete-button:hover {
+  background: var(--danger-color);
+}
+
+.birthday-list__empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 20px;
+}
+
+/* Форма добавления дня рождения */
+.add-birthday-form {
+  width: 100%;
+}
+
+.add-birthday-form__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 20px 0;
+}
+
+.add-birthday-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.add-birthday-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.add-birthday-form__label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.add-birthday-form__input,
+.add-birthday-form__textarea {
+  padding: 10px 12px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+}
+
+.add-birthday-form__input:focus,
+.add-birthday-form__textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.add-birthday-form__textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.add-birthday-form__error {
+  color: var(--danger-color);
+  font-size: 13px;
+  padding: 8px;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 6px;
+  border: 1px solid var(--danger-color);
+}
+
+.add-birthday-form__button {
+  padding: 12px 20px;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-birthday-form__button:hover {
+  background: var(--accent-hover);
+}
+
+/* Переключатель темы */
+.theme-toggle {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  border-radius: 20px;
+  padding: 4px;
+  cursor: pointer;
+  position: relative;
+  width: 60px;
+  height: 32px;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle__slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.theme-toggle__icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle__icon--light {
+  left: 4px;
+}
+
+.theme-toggle__icon--dark {
+  left: 28px;
+}
+
+/* Навигация */
+.navigation {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: rgba(var(--bg-secondary-rgb, 248, 249, 250), 0.9);
+}
+
+.navigation__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+.navigation__brand {
+  display: flex;
+  align-items: center;
+}
+
+.navigation__logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease;
+}
+
+.navigation__logo:hover {
+  color: var(--accent-color);
+}
+
+.navigation__menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navigation__link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.navigation__link:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.navigation__link--primary {
+  background: var(--accent-color);
+  color: white;
+  font-weight: 600;
+}
+
+.navigation__link--primary:hover {
+  background: var(--accent-hover);
+  color: white;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .dashboard__content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .auth-page__container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .auth-page__features {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard__header-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .dashboard__user-menu {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .auth-page__card {
+    padding: 24px;
+  }
+  
+  .calendar__days {
+    gap: 2px;
+  }
+  
+  .calendar__day {
+    font-size: 12px;
+  }
+  
+  .navigation__container {
+    padding: 0 16px;
+  }
+  
+  .navigation__menu {
+    gap: 12px;
+  }
+  
+  .navigation__link {
+    padding: 6px 12px;
+    font-size: 14px;
   }
 }
