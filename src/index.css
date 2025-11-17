@@ -1421,3 +1421,166 @@ video {
     padding: 28px 20px 40px;
   }
 }
+
+/* Mom Greeting Styles */
+.mom-greeting {
+  position: relative;
+  overflow: hidden;
+}
+
+.mom-greeting__hearts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mom-greeting__heart {
+  position: absolute;
+  font-size: 2rem;
+  animation: floatHeart 6s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.mom-greeting__card {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  border: 2px solid rgba(245, 87, 108, 0.15);
+}
+
+.mom-greeting__header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid rgba(245, 87, 108, 0.1);
+}
+
+.mom-greeting__icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  animation: pulseIcon 2s ease-in-out infinite;
+}
+
+@keyframes pulseIcon {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.mom-greeting__title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.mom-greeting__content {
+  padding: 0 20px;
+}
+
+.mom-greeting__content .shared-view__line {
+  animation: fadeInUp 0.6s ease-out backwards;
+  text-align: center;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  margin: 0.5em 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mom-greeting__footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px solid rgba(245, 87, 108, 0.1);
+}
+
+.mom-greeting__decoration {
+  text-align: center;
+  font-size: 1.5rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .mom-greeting__title {
+    font-size: 1.4rem;
+  }
+  
+  .mom-greeting__icon {
+    font-size: 3rem;
+  }
+  
+  .mom-greeting__content .shared-view__line {
+    font-size: 1.05rem;
+  }
+  
+  .mom-greeting__heart {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mom-greeting__title {
+    font-size: 1.2rem;
+  }
+  
+  .mom-greeting__content .shared-view__line {
+    font-size: 0.98rem;
+  }
+  
+  .mom-greeting__heart {
+    font-size: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mom-greeting__heart {
+    animation: none;
+    display: none;
+  }
+  
+  .mom-greeting__icon {
+    animation: none;
+  }
+  
+  .mom-greeting__content .shared-view__line {
+    animation: none;
+    opacity: 1;
+  }
+}

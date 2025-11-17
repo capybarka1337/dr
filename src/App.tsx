@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import CustomGreetingForm from './components/CustomGreetingForm';
 import DefaultGreetings from './components/DefaultGreetings';
 import GreetingView from './components/GreetingView';
+import MomGreeting from './components/MomGreeting';
 import { DEFAULT_THEME, THEMES, ThemeKey } from './themes';
 
 type GeneratedData = {
@@ -16,6 +17,12 @@ const App = () => {
     }
     return new URLSearchParams(window.location.search);
   }, []);
+  
+  const specialPage = searchParams.get('sp');
+  if (specialPage === 'mom2024') {
+    return <MomGreeting />;
+  }
+  
   const sharedText = searchParams.get('text')?.trim();
   const requestedTheme = (searchParams.get('theme') as ThemeKey) ?? DEFAULT_THEME;
   const shareTheme = THEMES[requestedTheme] ? requestedTheme : DEFAULT_THEME;
