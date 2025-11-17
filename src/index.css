@@ -1427,11 +1427,11 @@ video {
   position: relative;
   overflow: hidden;
   animation: none;
-  background-size: 260% 260%;
+  background-size: 100% 100%;
 }
 
 .mom-greeting--animated {
-  animation: gradientShift 60s ease infinite;
+  animation: none;
 }
 
 .mom-greeting--static {
@@ -1441,7 +1441,7 @@ video {
 .mom-greeting .shared-view__card {
   animation: none;
   transform-style: flat;
-  backdrop-filter: blur(8px);
+  backdrop-filter: none;
   will-change: auto;
 }
 
@@ -1496,7 +1496,7 @@ video {
 .mom-greeting__icon {
   font-size: 4rem;
   margin-bottom: 16px;
-  animation: pulseIcon 2s ease-in-out infinite;
+  animation: none;
 }
 
 @keyframes pulseIcon {
@@ -1511,10 +1511,7 @@ video {
 .mom-greeting__title {
   font-size: 1.8rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #f5576c;
   margin: 0;
   line-height: 1.3;
 }
@@ -1529,6 +1526,8 @@ video {
   font-size: 1.15rem;
   line-height: 1.8;
   margin: 0.5em 0;
+  color: inherit;
+  opacity: 1;
 }
 
 @keyframes fadeInUp {
@@ -1554,9 +1553,14 @@ video {
   opacity: 0.7;
 }
 
+.mom-greeting .shared-view__sparkle {
+  animation: none;
+  opacity: 0.5;
+}
+
 .mom-greeting--static .shared-view__sparkle {
   animation: none;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 @media (max-width: 768px) {
