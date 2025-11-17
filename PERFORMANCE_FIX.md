@@ -81,7 +81,7 @@
 ## Testing
 
 To verify the fixes work:
-1. Visit `localhost:5173/?sp=mom2024`
+1. Visit `localhost:5173/?dr=best`
 2. Check that all text is clearly visible from the start
 3. Verify smooth scrolling and no lag
 4. Confirm brief animations at page load that stop quickly
