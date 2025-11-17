@@ -152,9 +152,13 @@ video {
 
 .greeting-card--featured {
   grid-column: span 2;
-  transform: scale(1.02);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-  will-change: transform;
+}
+
+@media (min-width: 769px) {
+  .greeting-card--featured {
+    transform: scale(1.02);
+  }
 }
 
 .greeting-card--featured::before {
@@ -187,9 +191,21 @@ video {
   overflow: hidden;
   transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.3s ease;
   background-size: 180% 180%;
-  animation: cardGradientWave 35s ease infinite;
   isolation: isolate;
+  contain: layout style paint;
+}
+
+.greeting-card.is-visible {
+  animation: cardGradientWave 60s ease infinite;
+}
+
+.greeting-card:hover,
+.greeting-card:focus-within {
   will-change: transform;
+}
+
+.greeting-card:not(:hover):not(:focus-within) {
+  will-change: auto;
 }
 
 @keyframes cardGradientWave {
@@ -216,7 +232,7 @@ video {
   inset: 12% 18%;
   border-radius: 28px;
   background: radial-gradient(circle at top, rgba(255, 255, 255, 0.35), transparent 60%);
-  filter: blur(20px);
+  filter: blur(15px);
   opacity: 0;
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
@@ -238,12 +254,14 @@ video {
   position: absolute;
   inset: -40%;
   background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3), transparent 55%), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.25), transparent 60%);
-  filter: blur(20px);
-  opacity: 0.4;
-  animation: cardGlowPulse 12s ease-in-out infinite;
+  filter: blur(15px);
+  opacity: 0.3;
   pointer-events: none;
   z-index: 0;
-  will-change: opacity, transform;
+}
+
+.greeting-card.is-visible .greeting-card__glow {
+  animation: cardGlowPulse 20s ease-in-out infinite;
 }
 
 @keyframes cardGlowPulse {
@@ -262,8 +280,14 @@ video {
   position: absolute;
   font-size: 1.1rem;
   opacity: 0.35;
-  animation: cardParticleFloat 8s ease-in-out infinite;
   color: currentColor;
+  display: none;
+}
+
+.greeting-card.is-visible:hover .greeting-card__particle,
+.greeting-card.is-visible:focus-within .greeting-card__particle {
+  display: block;
+  animation: cardParticleFloat 8s ease-in-out infinite;
 }
 
 .greeting-card__particle--1 {
@@ -316,13 +340,18 @@ video {
   z-index: 3;
   border-radius: 28px;
   padding: clamp(26px, 5vw, 42px);
-  backdrop-filter: blur(8px);
   min-height: 260px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 20px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background-clip: padding-box;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .greeting-card__overlay {
+    backdrop-filter: blur(6px);
+  }
 }
 
 .greeting-card__header {
@@ -339,7 +368,6 @@ video {
   place-items: center;
   font-size: 1.9rem;
   background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.24);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
 }
@@ -468,20 +496,20 @@ video {
   }
 }
 
-/* Reduce animations on mobile for better performance */
+/* Mobile optimizations */
 @media (max-width: 768px) {
-  .greeting-card {
+  .greeting-card.is-visible {
     animation: cardGradientWave 50s ease infinite;
   }
   
-  .greeting-card__glow {
-    animation: cardGlowPulse 20s ease-in-out infinite;
+  .greeting-card.is-visible .greeting-card__glow {
+    animation: cardGlowPulse 25s ease-in-out infinite;
     filter: blur(12px);
-    opacity: 0.3;
+    opacity: 0.25;
   }
   
   .greeting-card__particle {
-    display: none;
+    display: none !important;
   }
   
   .greeting-card::after {
@@ -714,10 +742,9 @@ video {
   padding: clamp(32px, 8vw, 72px);
   background-size: 400% 400%;
   background-repeat: no-repeat;
-  animation: gradientShift 20s ease infinite;
+  animation: gradientShift 30s ease infinite;
   position: relative;
   overflow: hidden;
-  will-change: background-position;
 }
 
 @keyframes gradientShift {
@@ -742,13 +769,13 @@ video {
   width: min(680px, 100%);
   padding: clamp(40px, 6vw, 72px);
   border-radius: 40px;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
   display: grid;
   gap: 28px;
   text-align: center;
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  animation: cardFloat 6s ease-in-out infinite;
+  animation: cardFloat 8s ease-in-out infinite;
   transform-style: preserve-3d;
 }
 
@@ -787,7 +814,7 @@ video {
   font-weight: 600;
   font-size: 0.95rem;
   background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
